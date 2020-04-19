@@ -96,6 +96,14 @@
                 <div>
                     &nbsp;
                 </div>
+                <div>
+                    <span><button id="btn-check2">Check</button></span>
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;<b>Score:</b>&nbsp;</span>
+                    <span id='final-score2' width='150px' align='left'></span>
+                </div>
+                <div>
+                    &nbsp;
+                </div>
             </div>
         </div>
         
@@ -114,31 +122,6 @@
             // [min, max]
             function getRndInteger2(min, max) {
                 return Math.floor(Math.random() * (max - min + 1) ) + min;
-            }
-            
-            function init() {
-                var i =0;
-                for (i=0; i<qcount; i++) {
-                    
-                    var qtrId = "q" + i + "-tr";
-                    var qv1Id = "q" + i + "-v1";
-                    var qv2Id = "q" + i + "-v2";
-                    var qoId = "q" + i + "-operator";
-                    var qrId = "q" + i + "-result";
-                    
-                    var trVal = "<tr id='" + qtrId + "'>";
-                    trVal += "<td align='left' ><span>" + (i+1) + "</span>.</td>";
-                    trVal += "<td align='right' id='" + qv1Id +"'>&nbsp;</td>";
-                    trVal += "<td align='center' id='" + qoId +"'>&nbsp;</td>";
-                    trVal += "<td align='left' id='" + qv2Id +"'>&nbsp;</td>";
-                    //trVal += "<td align='left' ><input width='50px' type='text' id='" + qv1Id + "' readonly></td>";
-                    //trVal += "<td align='center'><span id='" + qoId +"'>&nbsp;</span></td>";
-                    //trVal += "<td align='left' ><input width='50px' type='text' id='" + qv2Id + "' readonly></td>";
-                    trVal += "<td align='left' >&nbsp;=&nbsp;</td>";
-                    trVal += "<td align='left' ><input width='120px' type='text' id='" + qrId + "' /></td>";
-                    trVal += "</tr>";
-                    $("#tbl_math_body").append(trVal);
-                }
             }
             
             function reset() {
@@ -194,18 +177,13 @@
                         v1 = v2 * getRndInteger(1, maxVal);
                     }
                     
-                    // $(qtrId).css("background-color","rgb(255, 255, 255)");
-                    // $(qv1Id).text(v1);
-                    // $(qoId).text(vop);
-                    // $(qv2Id).text(v2);
-                    
                     var trVal = "<tr id='" + qtrId + "'>";
-                    trVal += "<td align='left' ><span>" + (i+1) + "</span>.</td>";
+                    trVal += "<td align='left' ><span>(" + (i+1) + ")</span>.</td>";
                     trVal += "<td align='right' id='" + qv1Id +"'>" + v1 + "</td>";
                     trVal += "<td align='center' id='" + qoId +"'>" + vop + "</td>";
                     trVal += "<td align='left' id='" + qv2Id +"'>" + v2 + "</td>";
                     trVal += "<td align='left' >&nbsp;=&nbsp;</td>";
-                    trVal += "<td align='left' ><input width='120px' type='text' id='" + qrId + "'></td>";
+                    trVal += "<td align='left' ><input width='80px' type='text' id='" + qrId + "'></td>";
                     trVal += "</tr>";
                     $("#tbl_math_body").append(trVal);
                 }
@@ -251,7 +229,7 @@
                         }
                     } else if (vop == '-') {
                         if ((v1 - v2) != vr) {
-                            $(qrId).css("background-color","rgb(255, 255, 255)");
+                            $(qrId).css("background-color","rgb(255, 205, 205)");
                             errors += 1;
                         } else {
                             $(qrId).css("background-color","rgb(255, 255, 255)");
@@ -276,6 +254,7 @@
                     }
                     
                     $("#final-score").text(score + " / " + qcount);
+                    $("#final-score2").text(score + " / " + qcount);
                 }
             }
 
@@ -285,6 +264,9 @@
                     reset();
                 });
                 $("#btn-check").click(function(){
+                    check();
+                });
+                $("#btn-check2").click(function(){
                     check();
                 });
             });
