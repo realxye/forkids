@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <script src="jquery-3.4.1.min.js"></script>
+        <script src="mersenne-twister.js"></script>
         <style>
             @-webkit-viewport { width: device-width; }
             @-moz-viewport { width: device-width; }
@@ -115,13 +116,15 @@
             var qcount = 10;
             
             // [min, max)
-            function getRndInteger(min, max) {
-                return Math.floor(Math.random() * (max - min) ) + min;
+            function getRndInteger(r, min, max) {
+                return Math.floor(r.random() * (max - min) ) + min;
+                //return Math.floor(Math.random() * (max - min) ) + min;
             }
             
             // [min, max]
-            function getRndInteger2(min, max) {
-                return Math.floor(Math.random() * (max - min + 1) ) + min;
+            function getRndInteger2(r, min, max) {
+                return Math.floor(r.random() * (max - min + 1) ) + min;
+                //return Math.floor(Math.random() * (max - min + 1) ) + min;
             }
             
             function reset() {
@@ -131,6 +134,7 @@
                 var voperator = $("#sel-operator").val();
                 var maxVal = $("#sel-numrange").val();
                 var allowNegative = $("#chk-allowneg").prop("checked");
+                var r = new MersenneTwister(new Date().getTime());
                 
                 $("#tbl_math_body").empty();
                 
@@ -147,7 +151,7 @@
                     
                     var vop = voperator;
                     if (vop == "?") {
-                        var op = getRndInteger(0, 4);
+                        var op = getRndInteger(r, 0, 4);
                         if (op == 0) {
                             vop = '+';
                         } else if (op == 1) {
@@ -160,21 +164,21 @@
                     }
                     
                     if (vop == '+') {
-                        v1 = getRndInteger(1, maxVal);
-                        v2 = getRndInteger(1, maxVal);
+                        v1 = getRndInteger(r, 1, maxVal);
+                        v2 = getRndInteger(r, 1, maxVal);
                     } else if (vop == '-') {
-                        v1 = getRndInteger(1, maxVal);
+                        v1 = getRndInteger(r, 1, maxVal);
                         if (allowNegative) {
-                            v2 = getRndInteger(1, maxVal);
+                            v2 = getRndInteger(r, 1, maxVal);
                         } else {
-                            v2 = getRndInteger(1, v1);
+                            v2 = getRndInteger(r, 1, v1);
                         }
                     } else if (vop == 'x') {
-                        v1 = getRndInteger(1, maxVal);
-                        v2 = getRndInteger(1, maxVal);
+                        v1 = getRndInteger(r, 1, maxVal);
+                        v2 = getRndInteger(r, 1, maxVal);
                     } else {
-                        v2 = getRndInteger(1, maxVal);
-                        v1 = v2 * getRndInteger(1, maxVal);
+                        v2 = getRndInteger(r, 1, maxVal);
+                        v1 = v2 * getRndInteger(r, 1, maxVal);
                     }
                     
                     var trVal = "<tr id='" + qtrId + "'>";
